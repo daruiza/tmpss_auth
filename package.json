@@ -17,8 +17,8 @@
         "prod": "npm run production",
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
         
-        "docker-machine": "docker exec -it bitnami_tmss_auth /bin/sh",
-        "passport-client":"php artisan passport:client --password" 
+        "docker-machine": "docker exec -it bitnami_tmss_auth bash",
+        "pc":"php artisan passport:client --password" 
 
     },
     "devDependencies": {

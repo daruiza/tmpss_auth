@@ -9,10 +9,11 @@ Route::get('login', function (Request $request) {
 
 Route::get('user', function (Request $request) {
     return $request->user();
-})->middleware('auth:api');
+})->middleware('auth:sanctum');
 
 Route::get('hello', function (Request $request) {
     return response()->json([
-        '$request'=>$request
+        '$request'=>$request,
+        '$headers'=>$request->header('accept')
     ]);
 });

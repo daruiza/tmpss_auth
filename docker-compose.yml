@@ -22,8 +22,8 @@ services:
       #- /home/david/Software/tmpss_auth:/app
       - /mnt/c/software/tmpss_auth:/app
     ports:
-      - "0.0.0.0:8000:8000" 
-      - ":::8000:8000"
+      - "0.0.0.0:8001:8001" 
+      - ":::8001:8001"
     environment:
       - DB_HOST=mariadb
       - DB_DATABASE=${DB_DATABASE}
@@ -32,7 +32,7 @@ services:
     command: >
       sh -c "npm run start"    
     depends_on:
-      - mariadb    
+      - mariadb
   phpmyadmin:
     container_name: phpmyadmin_tmss_auth
     image: bitnami/phpmyadmin:5.2.1-debian-12-r32

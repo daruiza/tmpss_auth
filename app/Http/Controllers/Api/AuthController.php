@@ -25,7 +25,6 @@ class AuthController extends Controller
         ];
 
         try {
-
             $credentials = request([$this->name, $this->email, $this->password]);
             $validator = Validator::make($request->all(), $rules);
             if (!Auth::attempt($credentials) || $validator->fails()) {
@@ -46,14 +45,14 @@ class AuthController extends Controller
                 403);
         }
 
+        $user = $request->user();
+
         return response()->json([
             'data'=>'login',
-            // '$request'=>$request,
+            '$request'=>$request,
             'user'=>Auth::user(),
             'check'=>Auth::check(),
-            '$credentials'=>$credentials,
-            '$validator'=>$validator,
-            'attempt'=>Auth::attempt($credentials)
+            '$user'=> $user          
         ]);
     }
 

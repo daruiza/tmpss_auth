@@ -19,11 +19,13 @@ services:
     image: bitnami/laravel:10.3.3-debian-12-r13
     working_dir: /app
     volumes:
-      #- /home/david/Software/tmpss_auth:/app
       - /mnt/c/software/tmpss_auth:/app
+      #- /home/david/Software/tmpss_auth:/app
+      # - C:\software\tmpss_auth:/app
     ports:
-      - "0.0.0.0:8001:8001" 
-      - ":::8001:8001"
+      # - "0.0.0.0:8001:8001" 
+      # - ":::8001:8001"
+      - 8001:8080
     environment:
       - DB_HOST=mariadb
       - DB_DATABASE=${DB_DATABASE}
@@ -33,13 +35,16 @@ services:
       sh -c "npm run start"    
     depends_on:
       - mariadb
+      
   phpmyadmin:
     container_name: phpmyadmin_tmss_auth
     image: bitnami/phpmyadmin:5.2.1-debian-12-r32
     ports:
       - 8080:8080
+      - 443:8443
     depends_on:
       - mariadb
+      
 volumes:
   tmpss_volume:
     external: true

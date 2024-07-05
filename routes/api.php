@@ -6,8 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 
 Route::group(['prefix' => 'auth', ], function () {
-    // Route::post('login', 'Api\AuthController@login')->name('login');
-    Route::get('login', [AuthController::class,'login'])->name('login');
+    Route::post('login', [AuthController::class,'login'])->name('login');
     Route::group(['middleware' => 'authvalid'], function () {
         Route::get('logout', 'Api\AuthController@logout');
         Route::get('user', 'Api\AuthController@user');

@@ -16,6 +16,27 @@ class AuthController extends Controller
     private $email = 'email';
     private $password = 'password';
     
+     /**
+     * @OA\Post(
+     *      path="/auth/login",
+     *      operationId="getToken",
+     *      tags={"Auth"},
+     *      summary="Get User Token",
+     *      description="Return Token",
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(ref="App\Models\schemas\Auth")
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      )
+     *     )
+     */
     public function login(Request $request)
     {
 

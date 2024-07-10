@@ -8,8 +8,8 @@ use App\Http\Controllers\Api\AuthController;
 Route::group(['prefix' => 'auth', ], function () {
     Route::post('login', [AuthController::class,'login'])->name('login');
     Route::group(['middleware' => 'authvalid'], function () {
-        Route::get('logout', 'Api\AuthController@logout');
-        Route::get('user', 'Api\AuthController@user');
+        Route::get('logout', [AuthController::class,'logout']);
+        Route::get('user', [AuthController::class,'user']);
     });
 });
 

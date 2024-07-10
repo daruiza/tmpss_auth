@@ -3,15 +3,15 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Carbon;
+// use Carbon\Carbon;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Facades\Validator;
-
-use Illuminate\Support\Carbon;
-// use Carbon\Carbon;
 
 class AuthController extends Controller
 {
@@ -54,11 +54,23 @@ class AuthController extends Controller
                 throw (new ValidationException($validator));
             }
 
-            $user = $request->user();
-            $tokenResult = $user->createToken(env('APP_NAME'));
+            $user = Auth::user();
+            // $tokenResult = $user->createToken(env('APP_NAME'));
             // $token = $tokenResult->token;
             // $token->expires_at = Carbon::now()->addDays(1);
             // $token->save();
+
+            // $response = Http::post(env('APP_URL') . '/oauth/token', [
+            //     'grant_type' => 'password',
+            //     'client_id' => env('PASSPORT_PASSWORD_CLIENT_ID'),
+            //     'client_secret' => env('PASSPORT_PASSWORD_SECRET'),
+            //     'username' => $request->email,
+            //     'password' => $request->password,
+            //     'scope' => '',
+            // ]);
+
+            $response = Http::get(env('APP_URL') . '/api/hello' );
+            $user['token'] = $response->json();
 
         } 
         catch (ValidationException $e) {

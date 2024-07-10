@@ -25,7 +25,7 @@ class AuthController extends Controller
      *      description="Return Token",
      *      @OA\RequestBody(
      *          required=true,
-     *          @OA\JsonContent(ref="App\Models\schemas\Auth")
+     *          @OA\JsonContent(ref="#/components/schemas/Login")
      *      ),
      *      @OA\Response(
      *          response=200,

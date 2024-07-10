@@ -1,13 +1,17 @@
 <?php
 
+namespace App\Schemas;
+
+use Illuminate\Http\Resources\Json\JsonResource;
+
 /**
  * @OA\Schema(
- *      title="LoginSchema",
- *      description="LoginSchema body data",
+ *      title="Login",
+ *      description="Login body data",
  *      type="object"
  * )
  */
-class LoginSchema
+class Login extends JsonResource
 {
     /**
      * @OA\Property(

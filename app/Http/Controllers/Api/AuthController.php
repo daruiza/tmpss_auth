@@ -10,6 +10,9 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Validator;
 
+use Illuminate\Support\Carbon;
+// use Carbon\Carbon;
+
 class AuthController extends Controller
 {
     private $name = 'name';
@@ -39,7 +42,6 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-
         $rules = [
             $this->email    => 'required|string|max:128|email',
             $this->password => 'required|string',
@@ -52,6 +54,12 @@ class AuthController extends Controller
                 throw (new ValidationException($validator));
             }
 
+            $user = $request->user();
+            $tokenResult = $user->createToken(env('APP_NAME'));
+            // $token = $tokenResult->token;
+            // $token->expires_at = Carbon::now()->addDays(1);
+            // $token->save();
+
         } 
         catch (ValidationException $e) {
             return response()->json([
@@ -62,18 +70,21 @@ class AuthController extends Controller
         catch (\Exception $e) {
             return response()->json([
                 'message' => 'Credenciales no autorizadas', 
-                'error' => $e],
+                'error' => $e->getMessage()],
                 403);
         }
-
-        $user = $request->user();
 
         return response()->json([
             'data'=>'login',
             '$request'=>$request,
             'user'=>Auth::user(),
             'check'=>Auth::check(),
-            '$user'=> $user          
+            '$user'=> $request->user(),
+            // 'access_token' => $tokenResult->accessToken,
+            // 'token_type'   => 'Bearer',
+            // 'expires_at'   => Carbon::parse(
+            //     $tokenResult->token->expires_at
+            // )->toDateTimeString(),
         ]);
     }
 

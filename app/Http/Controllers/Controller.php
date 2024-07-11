@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
  * @OA\Info(
  *      version="1.0.0",
  *      title="TMPSSAuth Documentación",
- *      description="Salud Ocupacional APP",
+ *      description="Temposolutions APP",
  *      @OA\Contact(
  *          email="daruiza@gmail.com"
  *      ),

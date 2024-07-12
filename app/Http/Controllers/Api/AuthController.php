@@ -69,7 +69,10 @@ class AuthController extends Controller
             //     'scope' => '',
             // ]);
 
-            $response = Http::get(env('APP_URL') . '/api/hello' );
+            
+            // $response = Http::get('http://host.docker.internal:8001/api/hello');
+            // $response = Http::get('http://0.0.0.0:8000/api/hello');
+            $response = Http::get('http://127.0.0.1:8001/api/hello');
             $user['token'] = $response->json();
 
         } 

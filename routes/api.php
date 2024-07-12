@@ -22,4 +22,4 @@ Route::get('hello', function (Request $request) {
         '$request'=>$request,
         '$headers'=>$request->header('accept')
     ]);
-});
+})->name('hello');

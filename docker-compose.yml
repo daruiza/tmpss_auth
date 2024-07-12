@@ -23,9 +23,9 @@ services:
       #- /home/david/Software/tmpss_auth:/app
       # - C:\software\tmpss_auth:/app
     ports:
-      # - "0.0.0.0:8001:8001" 
-      # - ":::8001:8001"
-      - 8001:8080
+      #- "0.0.0.0:8001:8001" 
+      #- ":::8001:8001"
+      - 8001:8000
     environment:
       - DB_HOST=mariadb
       - DB_DATABASE=${DB_DATABASE}

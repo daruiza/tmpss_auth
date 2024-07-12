@@ -19,8 +19,8 @@ services:
     image: bitnami/laravel:10.3.3-debian-12-r13
     working_dir: /app
     volumes:
-      - /mnt/c/software/tmpss_auth:/app
-      #- /home/david/Software/tmpss_auth:/app
+      - /home/david/Software/tmpss_auth:/app
+      #- /mnt/c/software/tmpss_auth:/app
       # - C:\software\tmpss_auth:/app
     ports:
       #- "0.0.0.0:8001:8001" 
@@ -41,7 +41,9 @@ services:
     image: bitnami/phpmyadmin:5.2.1-debian-12-r32
     ports:
       - 8080:8080
-      - 443:8443
+    restart: always
+    environment:
+      - PMA_ARBITRARY=1
     depends_on:
       - mariadb
       

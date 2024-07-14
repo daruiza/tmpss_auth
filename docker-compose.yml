@@ -10,7 +10,7 @@ services:
       - MARIADB_ROOT_USER=${DB_USERNAME}
       - MARIADB_ROOT_PASSWORD=${DB_PASSWORD}
     ports:
-      - 3300:3306
+      - 3301:3306
     volumes:
       - tmpss_volume:/bitnami/mariadb
     #networks:

@@ -1,37 +1,31 @@
 <?php
 
 namespace App\Http\Controllers;
+use OpenApi\Attributes as OA;
 
-/**
- * @OA\Info(
- *      version="1.0.0",
- *      title="TMPSSAuth Documentación",
- *      description="TMPSSAuth APP",
- *      @OA\Contact(
- *          email="daruiza@gmail.com"
- *      ),
- *      @OA\License(
- *          name="Apache 2.0",
- *          url="http://www.apache.org/licenses/LICENSE-2.0.html"
- *      )
- * )
- *
- * @OA\Server(
- *      url=L5_SWAGGER_CONST_HOST,
- *      description="TMPSS API Server"
- * )
- *
- * @OA\Tag(
- *     name="Auth",
- *     description="API EndPoints of Auth"
- * )
- * @OA\SecuritySchemes(
- *     securityDefinition="bearer",
- *     type="apiKey",
- *     in="header",
- *     name="Authorization"
- * )
- */
+#[
+    OA\Info(
+        version: "1.0.0", 
+        description: "TMPSSAuth APP", 
+        title: "TMPSSAuth Documentación"),
+
+    OA\Server(
+        url: 'http://127.0.0.1:8001/api', 
+        description: "local server"),
+    
+    OA\Tag(
+        name:"Auth",
+        description:"API EndPoints of Auth"),
+        
+    OA\SecurityScheme( 
+        securityScheme: 'bearer', 
+        type: "apiKey", 
+        name: "Authorization", 
+        in: "header", 
+        scheme: "bearer"
+    ),
+] 
+
 abstract class Controller
 {
     //

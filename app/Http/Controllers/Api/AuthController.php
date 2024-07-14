@@ -114,6 +114,29 @@ class AuthController extends Controller
     public function logout(Request $request){}
     
 
+    /**
+     * @OA\Get(
+     *      path="/auth/user",
+     *      operationId="getUser",
+     *      tags={"Auth"},
+     *      summary="Get User Auth",
+     *      description="Return User",
+     *      security={ {"bearer": {} }},
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated"
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     *     )
+     */
+
     public function user(Request $request){
         return response()->json([
             'data'=>'login',

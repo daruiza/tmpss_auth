@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 
 use Illuminate\Validation\ValidationException;
 
+use GuzzleHttp;
+
 class AuthController extends Controller
 {
     private $name = 'name';
@@ -54,11 +56,11 @@ class AuthController extends Controller
                 throw (new ValidationException($validator));
             }
 
-            $user = Auth::user();
-            // $tokenResult = $user->createToken(env('APP_NAME'));
-            // $token = $tokenResult->token;
-            // $token->expires_at = Carbon::now()->addDays(1);
-            // $token->save();
+            $user = $request->user();
+            $tokenResult = $user->createToken(env('APP_NAME'));
+            $token = $tokenResult->token;
+            $token->expires_at = Carbon::now()->addDays(1);
+            $token->save();
 
             // $response = Http::post(env('APP_URL') . '/oauth/token', [
             //     'grant_type' => 'password',
@@ -70,10 +72,18 @@ class AuthController extends Controller
             // ]);
 
             
-            // $response = Http::get('http://host.docker.internal:8001/api/hello');
-            // $response = Http::get('http://0.0.0.0:8000/api/hello');
-            $response = Http::get('http://127.0.0.1:8001/api/hello');
-            $user['token'] = $response->json();
+            //$response = Http::get('http://host.docker.internal:8001/api/hello');
+            //response = Http::get('http://0.0.0.0:8000/api/hello');
+            //$response = Http::get('http://127.0.0.1:8001/api/hello');
+            //$response = Http::get('http://192.168.58.100:8001/api/hello');
+            //$response = Http::get('http://172.18.0.3:8000/api/hello');
+            //$response = Http::get('http://localhost:8001/api/hello');
+            //$user['token'] = $response->json();
+
+
+            #$client = new GuzzleHttp\Client();
+            #$res = $client->request('GET', 'http://api.local:8000/api/hello');
+            #$user['Guzz']=$res;
 
         } 
         catch (ValidationException $e) {
@@ -90,16 +100,14 @@ class AuthController extends Controller
         }
 
         return response()->json([
-            'data'=>'login',
-            '$request'=>$request,
-            'user'=>Auth::user(),
-            'check'=>Auth::check(),
-            '$user'=> $request->user(),
-            // 'access_token' => $tokenResult->accessToken,
-            // 'token_type'   => 'Bearer',
-            // 'expires_at'   => Carbon::parse(
-            //     $tokenResult->token->expires_at
-            // )->toDateTimeString(),
+            'data' => [
+                'access_token' => $tokenResult->accessToken,
+                'token_type'   => 'Bearer',
+                'expires_at'   => Carbon::parse(
+                    $tokenResult->token->expires_at
+                )->toDateTimeString(),
+            ],
+            'message' => 'Usuario logueado con éxito!'
         ]);
     }
 

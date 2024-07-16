@@ -6,7 +6,6 @@ use Illuminate\Support\ServiceProvider;
 use Laravel\Passport\Passport;
 
 
-
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -22,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Passport::hashClientSecrets();
+        //Passport::hashClientSecrets();
         Passport::enablePasswordGrant();
         Passport::tokensExpireIn(now()->addDays(15));
         Passport::refreshTokensExpireIn(now()->addDays(30));

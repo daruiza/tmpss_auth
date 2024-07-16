@@ -23,7 +23,7 @@ class AuthController extends Controller
     
      /**
      * @OA\Post(
-     *      path="/auth/login",
+     *      path="/auth/clientlogin",
      *      operationId="getToken",
      *      tags={"Auth"},
      *      summary="Get User Token",
@@ -42,7 +42,7 @@ class AuthController extends Controller
      *      )
      *     )
      */
-    public function login(Request $request)
+    public function clientLogin(Request $request)
     {
         $rules = [
             $this->email    => 'required|string|max:128|email',

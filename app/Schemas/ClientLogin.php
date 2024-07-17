@@ -6,12 +6,12 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * @OA\Schema(
- *      title="Login",
+ *      title="ClientLogin",
  *      description="Login body data",
  *      type="object"
  * )
  */
-class Login extends JsonResource
+class ClientLogin extends JsonResource
 {
     /**
      * @OA\Property(

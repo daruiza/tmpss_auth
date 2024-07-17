@@ -30,7 +30,7 @@ class AuthController extends Controller
      *      description="Return Token",
      *      @OA\RequestBody(
      *          required=true,
-     *          @OA\JsonContent(ref="#/components/schemas/Login")
+     *          @OA\JsonContent(ref="#/components/schemas/ClientLogin")
      *      ),
      *      @OA\Response(
      *          response=200,
@@ -60,30 +60,7 @@ class AuthController extends Controller
             $tokenResult = $user->createToken(env('APP_NAME'));
             $token = $tokenResult->token;
             $token->expires_at = Carbon::now()->addDays(1);
-            $token->save();
-
-            // $response = Http::post(env('APP_URL') . '/oauth/token', [
-            //     'grant_type' => 'password',
-            //     'client_id' => env('PASSPORT_PASSWORD_CLIENT_ID'),
-            //     'client_secret' => env('PASSPORT_PASSWORD_SECRET'),
-            //     'username' => $request->email,
-            //     'password' => $request->password,
-            //     'scope' => '',
-            // ]);
-
-            
-            //$response = Http::get('http://host.docker.internal:8001/api/hello');
-            //response = Http::get('http://0.0.0.0:8000/api/hello');
-            //$response = Http::get('http://127.0.0.1:8001/api/hello');
-            //$response = Http::get('http://192.168.58.100:8001/api/hello');
-            //$response = Http::get('http://172.18.0.3:8000/api/hello');
-            //$response = Http::get('http://localhost:8001/api/hello');
-            //$user['token'] = $response->json();
-
-
-            #$client = new GuzzleHttp\Client();
-            #$res = $client->request('GET', 'http://api.local:8000/api/hello');
-            #$user['Guzz']=$res;
+            $token->save();          
 
         } 
         catch (ValidationException $e) {
@@ -110,6 +87,59 @@ class AuthController extends Controller
             'message' => 'Usuario logueado con éxito!'
         ]);
     }
+
+
+    /**
+     * @OA\Post(
+     *      path="/auth/passwordlogin",
+     *      operationId="getPasswordToken",
+     *      tags={"Auth"},
+     *      summary="Get Password Token",
+     *      description="Return Token",
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(ref="#/components/schemas/PasswordLogin")
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      )
+     *     )
+     */
+    public function passwordLogin(Request $request){
+
+          // $response = Http::post(env('APP_URL') . '/oauth/token', [
+        //     'grant_type' => 'password',
+        //     'client_id' => env('PASSPORT_PASSWORD_CLIENT_ID'),
+        //     'client_secret' => env('PASSPORT_PASSWORD_SECRET'),
+        //     'username' => $request->email,
+        //     'password' => $request->password,
+        //     'scope' => '',
+        // ]);
+        
+        //$response = Http::get('http://host.docker.internal:8001/api/hello');
+        //response = Http::get('http://0.0.0.0:8000/api/hello');
+        //$response = Http::get('http://127.0.0.1:8001/api/hello');
+        //$response = Http::get('http://192.168.58.100:8001/api/hello');
+        //$response = Http::get('http://172.18.0.3:8000/api/hello');
+        //$response = Http::get('http://localhost:8001/api/hello');
+        //$user['token'] = $response->json();
+
+        // $client = new GuzzleHttp\Client();
+        // $res = $client->request('GET', 'http://api.local:8000/api/hello');
+        // $user['Guzz']=$res;
+        // 172.20.1.187 172.17.0.1 172.21.0.1 172.19.0.1 172.18.0.1
+        $response = Http::get('http://172.18.0.3/16:8000/api/hello');
+        return response()->json([
+            'data' => [ '$response' => $response],
+            'message' => 'Usuario logueado con éxito!'
+        ]);
+    }
+
 
     public function logout(Request $request){}
     

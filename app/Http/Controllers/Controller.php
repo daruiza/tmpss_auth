@@ -17,12 +17,12 @@ use OpenApi\Attributes as OA;
         name:"Auth",
         description:"API EndPoints of Auth"),
         
-    OA\SecurityScheme( 
-        securityScheme: 'bearer', 
-        type: "apiKey", 
-        name: "Authorization", 
-        in: "header", 
-        scheme: "bearer"
+    OA\SecurityScheme(
+        securityScheme:'bearer', 
+        type:'apiKey', 
+        name:'Authorization', 
+        in:'header', 
+        scheme:'bearer'
     ),
 ] 
 

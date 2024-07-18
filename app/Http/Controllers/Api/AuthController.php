@@ -79,6 +79,7 @@ class AuthController extends Controller
         return response()->json([
             'data' => [
                 'access_token' => $tokenResult->accessToken,
+                'token' => $token,
                 'token_type'   => 'Bearer',
                 'expires_at'   => Carbon::parse(
                     $tokenResult->token->expires_at
@@ -129,20 +130,20 @@ class AuthController extends Controller
         //$response = Http::get('http://localhost:8001/api/hello');
         //$user['token'] = $response->json();
 
+        $response = Http::get('http://172.18.0.1:8001/api/hello');
+        // $response = Http::get('http://localhost:8001/api/hello');
         // $client = new GuzzleHttp\Client();
-        // $res = $client->request('GET', 'http://api.local:8000/api/hello');
+        // $res = $client->request('GET', 'http://172.18.0.1:8001/api/hello');
         // $user['Guzz']=$res;
-        // 172.20.1.187 172.17.0.1 172.21.0.1 172.19.0.1 172.18.0.1
-        $response = Http::get('http://172.18.0.3/16:8000/api/hello');
+
+        // gateway.docker.internal
+        // 192.168.200.131
+        
         return response()->json([
-            'data' => [ '$response' => $response],
+            'data' => [ '$response' => '$res'],
             'message' => 'Usuario logueado con éxito!'
         ]);
-    }
-
-
-    public function logout(Request $request){}
-    
+    }    
 
     /**
      * @OA\Get(
@@ -169,10 +170,46 @@ class AuthController extends Controller
 
     public function user(Request $request){
         return response()->json([
-            'data'=>'login',
-            'user'=>Auth::user(),
-            'check'=>Auth::check()
+            'data'=>[
+                'authuser'=>Auth::user(),
+                'requestUser'=>$request->user()
+            ],
         ]);
+    }
+
+    /**
+     * @OA\Get(
+     *      path="/auth/clientlogout",
+     *      operationId="getClientLogout",
+     *      tags={"Auth"},
+     *      summary="Get User Client LogOut",
+     *      description="Return Boolean",
+     *      security={ {"bearer": {} }},
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated"
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     *     )
+     */
+
+    public function clientLogout(Request $request){
+
+        // $request->user()->tokens()->delete();
+        $request->user()->token()->revoke();
+
+        return response()->json([
+            'success' => true,
+            'statusCode' => 204,
+            'message' => 'Logged out successfully.',
+        ], 204);
     }
     
 }

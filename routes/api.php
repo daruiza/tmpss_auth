@@ -3,13 +3,15 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use Illuminate\Support\Facades\Http;
+
 use App\Http\Controllers\Api\AuthController;
 
 Route::group(['prefix' => 'auth', ], function () {
     Route::post('clientlogin', [AuthController::class,'clientLogin']);
     Route::post('passwordlogin', [AuthController::class,'passwordLogin']);
     Route::group(['middleware' => 'auth:api'], function () {
-        Route::get('logout', [AuthController::class,'logout']);
+        Route::get('clientlogout', [AuthController::class,'clientLogout']);
         Route::get('user', [AuthController::class,'user']);
     });
 });

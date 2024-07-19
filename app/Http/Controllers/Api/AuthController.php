@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 use GuzzleHttp;
+use Illuminate\Support\Facades\Route;
 
 class AuthController extends Controller
 {
@@ -113,7 +114,7 @@ class AuthController extends Controller
      */
     public function passwordLogin(Request $request){
 
-          // $response = Http::post(env('APP_URL') . '/oauth/token', [
+        // $response = Http::post(env('APP_URL', 'http://127.0.0.1:8001') . '/oauth/token', [
         //     'grant_type' => 'password',
         //     'client_id' => env('PASSPORT_PASSWORD_CLIENT_ID'),
         //     'client_secret' => env('PASSPORT_PASSWORD_SECRET'),
@@ -121,6 +122,13 @@ class AuthController extends Controller
         //     'password' => $request->password,
         //     'scope' => '',
         // ]);
+
+        $response = Http::post( 'http://127.0.0.1:8000/oauth/token', [
+            'grant_type' => 'client_credentials',
+            'client_id' => '9c8f9c29-8c42-462e-a4f7-7724a176db4f​',
+            'client_secret' => 'eWRRObiLhhabYKUBYzWLRqozVgyLixDcZSs9qzDW'            
+        ]);
+       
         
         //$response = Http::get('http://host.docker.internal:8001/api/hello');
         //response = Http::get('http://0.0.0.0:8000/api/hello');
@@ -130,7 +138,7 @@ class AuthController extends Controller
         //$response = Http::get('http://localhost:8001/api/hello');
         //$user['token'] = $response->json();
 
-        $response = Http::get('http://172.18.0.1:8001/api/hello');
+        // $response = Http::get('http://172.18.0.1:8001/api/hello');
         // $response = Http::get('http://localhost:8001/api/hello');
         // $client = new GuzzleHttp\Client();
         // $res = $client->request('GET', 'http://172.18.0.1:8001/api/hello');
@@ -138,9 +146,14 @@ class AuthController extends Controller
 
         // gateway.docker.internal
         // 192.168.200.131
+
+        // $response = Http::get('http://127.0.0.1:8001/api/hello')->throw()->json();
+
         
         return response()->json([
-            'data' => [ '$response' => '$res'],
+            'data' => [ 
+                '$response' => $response->json(),
+            ],
             'message' => 'Usuario logueado con éxito!'
         ]);
     }    

@@ -5,8 +5,8 @@
         "dev": "vite",
         "build": "vite build",
 
-        "start": "php artisan serve --port=8000 --host 0.0.0.0",
-        "localstart": "php artisan serve --port=8000",
+        "start": "php artisan serve --port=8001 --host 0.0.0.0",
+        "localstart": "php artisan serve --port=8001 --host=127.0.0.1",
         "mr": "php artisan migrate:refresh --seed",
         "pk": "php artisan passport:keys --force",
         "l5": "php artisan l5-swagger:generate",
@@ -19,7 +19,7 @@
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
         
         "docker-machine": "docker exec -it bitnami_tmss_auth bash",
-        "pcpa":"php artisan passport:client --password",
+        "pcpa": "php artisan passport:client --password",
         "pcpe": "php artisan passport:client --personal"
 
     },

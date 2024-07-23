@@ -13,17 +13,6 @@ Route::group(['prefix' => 'auth', ], function () {
         Route::get('clientlogout', [AuthController::class,'clientLogout']);
         Route::get('user', [AuthController::class,'user']);
     });
-
-
-    Route::get('auth/redirect', function () {
-        return Socialite::driver('github')->redirect();
-    });
-     
-    Route::get('auth/callback', function () {
-        $user = Socialite::driver('github')->user();
-     
-        // $user->token
-    });
 });
 
 

@@ -21,6 +21,11 @@ return new class extends Migration
             $table->string('theme')->nullable();
             $table->string('photo')->nullable();
             $table->string('password');
+            
+            $table->unsignedBigInteger('github_id')->nullable();
+            $table->string('github_token')->nullable();
+            $table->string('github_refresh_token')->nullable();            
+
             $table->rememberToken();
             $table->timestamps();
         });

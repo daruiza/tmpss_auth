@@ -13,8 +13,12 @@ use Illuminate\Http\Request;
 
 use Illuminate\Validation\ValidationException;
 
-use GuzzleHttp;
 use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
+
+use Illuminate\Support\Facades\Hash;
+
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -155,6 +159,62 @@ class AuthController extends Controller
             'statusCode' => 204,
             'message' => 'Logged out successfully.',
         ], 204);
+    }
+
+
+    /**
+     * @OA\Get(
+     *      path="/auth/callback",
+     *      operationId="getTockenOnCallbackSocialite",
+     *      tags={"Auth"},
+     *      summary="Get Tocken Laravel",
+     *      description="Return Tocken",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated"
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     *     )
+     */
+
+     public function githubCallback(Request $request) {
+
+
+        $githubUser  = Socialite::driver('github')->user();
+
+        $user = User::updateOrCreate([
+            'github_id' => $githubUser->id,
+        ], [
+            'name' => $githubUser->name??$githubUser->nickname,
+            'email' => $githubUser->email,
+            'password' => Hash::make('0000'),
+            'github_id' => $githubUser->id,
+            'github_token' => $githubUser->token,
+            'github_refresh_token' => $githubUser->refreshToken,
+        ]);     
+        // Auth::login($user);
+
+
+        return response()->json([
+            'data'=>[
+                '$request'=>$request,
+                '$githubUser'=>$githubUser,
+                '$getNickname'=>$githubUser->getNickname(),
+                'github_id' => $githubUser->id,
+                '$name'=>$githubUser->name??$githubUser->nickname,
+                'email' => $githubUser->email,
+                'password' => Hash::make('0000'),
+                'github_token' => $githubUser->token,
+                'github_refresh_token' => $githubUser->refreshToken,
+            ],
+        ]);
     }
     
 }

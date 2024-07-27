@@ -10,11 +10,12 @@ Route::get('/', function () {
 
 
 Route::group(['prefix' => 'auth', ], function () {
-    Route::get('redirect/{driver}', function (string $driver) {
-        return Socialite::driver($driver)->redirect();
-    });
 
-    Route::get('githubcallback', [AuthController::class,'githubCallback']);
+    Route::get('redirect/{driver}', [AuthController::class,'redirect']);
+
+    Route::get('callback/{driver}', [AuthController::class,'callback']);
+
+    //TODO: realizar e logOut de Socialite
 
 });
 

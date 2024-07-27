@@ -11,7 +11,10 @@ use OpenApi\Attributes as OA;
 
     OA\Server(
         url: 'http://127.0.0.1:8001/api', 
-        description: "local server"),
+        description: "local api server"),
+    OA\Server(
+            url: 'http://127.0.0.1:8001', 
+            description: "local web server"),            
     
     OA\Tag(
         name:"Auth",

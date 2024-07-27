@@ -125,6 +125,7 @@ class AuthController extends Controller
             ],
         ]);
     }
+    
 
     /**
      * @OA\Get(
@@ -148,7 +149,6 @@ class AuthController extends Controller
      *      )
      *     )
      */
-
     public function clientLogout(Request $request){
 
         // $request->user()->tokens()->delete();
@@ -162,13 +162,58 @@ class AuthController extends Controller
     }
 
 
+
     /**
      * @OA\Get(
-     *      path="/auth/callback",
-     *      operationId="getTockenOnCallbackSocialite",
-     *      tags={"Auth"},
+     *      path="/auth/redirect/{driver}",
+     *      operationId="getRedirectSocialite",
+     *      tags={"Socialite"},
+     *      summary="Redirect to Driver Socialite",
+     *      description="Redirect to Driver",
+     *      @OA\Parameter(
+     *          name="driver",
+     *          description="Socialite Driver",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated"
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     *     )
+     */
+    public function redirect(Request $request, string $driver){
+        return Socialite::driver($driver)->redirect();
+    }
+
+
+    /**
+     * @OA\Get(
+     *      path="/auth/callback/{driver}",
+     *      operationId="getCallbackSocialite",
+     *      tags={"Socialite"},
      *      summary="Get Tocken Laravel",
-     *      description="Return Tocken",
+     *      description="Return Token",
+     *       @OA\Parameter(
+     *          name="driver",
+     *          description="Socialite Driver",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -184,10 +229,10 @@ class AuthController extends Controller
      *     )
      */
 
-     public function githubCallback(Request $request) {
+     public function callback(Request $request, string $driver) {
 
 
-        $githubUser  = Socialite::driver('github')->user();
+        $githubUser  = Socialite::driver($driver??'github')->user();
 
         $user = User::updateOrCreate([
             'github_id' => $githubUser->id,
@@ -198,13 +243,22 @@ class AuthController extends Controller
             'github_id' => $githubUser->id,
             'github_token' => $githubUser->token,
             'github_refresh_token' => $githubUser->refreshToken,
-        ]);     
-        // Auth::login($user);
+        ]);   
+
+        //Auth::login($user);
+        //$tokenResult = $user->createToken(env('APP_NAME'));
+        //$token = $tokenResult->token;
+        //$token->expires_at = Carbon::now()->addDays(1);
+        //$token->save();          
+
+        
+
 
 
         return response()->json([
             'data'=>[
                 '$request'=>$request,
+                'user'=>$user,
                 '$githubUser'=>$githubUser,
                 '$getNickname'=>$githubUser->getNickname(),
                 'github_id' => $githubUser->id,

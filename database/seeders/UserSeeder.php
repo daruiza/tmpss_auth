@@ -23,6 +23,16 @@ class UserSeeder extends Seeder
             'password' => Hash::make('0000'),
             'theme' => 'super',
             'photo' => null,
-        ));      
+        ));
+        
+        DB::table('users')->insert(array(
+            'name' => 'super-root',
+            'lastname' => 'root',
+            'phone' => '3194065226',
+            'email' => 'root@mail.com',
+            'password' => Hash::make('0000'),
+            'theme' => 'super',
+            'photo' => null,
+        ));
     }
 }

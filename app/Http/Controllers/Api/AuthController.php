@@ -229,9 +229,8 @@ class AuthController extends Controller
      *     )
      */
 
-     public function callback(Request $request, string $driver) {
-
-
+    public function callback(Request $request, string $driver) {
+        
         $githubUser  = Socialite::driver($driver??'github')->user();
 
         $user = User::updateOrCreate([
@@ -249,11 +248,7 @@ class AuthController extends Controller
         //$tokenResult = $user->createToken(env('APP_NAME'));
         //$token = $tokenResult->token;
         //$token->expires_at = Carbon::now()->addDays(1);
-        //$token->save();          
-
-        
-
-
+        //$token->save();
 
         return response()->json([
             'data'=>[

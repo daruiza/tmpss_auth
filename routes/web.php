@@ -13,6 +13,7 @@ Route::group(['prefix' => 'auth', ], function () {
 
     Route::get('redirect/{driver}', [AuthController::class,'redirect']);
 
+    //Route::get('callback/{driver}', [AuthController::class,'callback']);
     Route::get('callback/{driver}', [AuthController::class,'callback']);
 
 

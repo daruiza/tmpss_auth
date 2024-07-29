@@ -12,17 +12,7 @@ Route::get('/', function () {
 Route::group(['prefix' => 'auth', ], function () {
 
     Route::get('redirect/{driver}', [AuthController::class,'redirect']);
-
-    //Route::get('callback/{driver}', [AuthController::class,'callback']);
-    Route::get('callback/{driver}', [AuthController::class,'callback']);
-
-
-    Route::get('callback-github', function () {
-        $githubUser  = Socialite::driver('github')->user();
-        return response()->json(['data'=>[
-            'githubUser'=>$githubUser
-        ]]);
-    });
+    Route::get('callback_github', [AuthController::class,'callback_github']);
 
     //TODO: realizar e logOut de Socialite
 

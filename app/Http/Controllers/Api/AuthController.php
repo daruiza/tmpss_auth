@@ -195,25 +195,15 @@ class AuthController extends Controller
      */
     public function redirect(Request $request, string $driver){
         return Socialite::driver($driver)->redirect();
-    }
-
+    }   
 
     /**
      * @OA\Get(
-     *      path="/auth/callback/{driver}",
+     *      path="/auth/callback_github",
      *      operationId="getCallbackSocialite",
      *      tags={"Socialite"},
-     *      summary="Get Tocken Laravel",
-     *      description="Return Token",
-     *       @OA\Parameter(
-     *          name="driver",
-     *          description="Socialite Driver",
-     *          required=true,
-     *          in="path",
-     *          @OA\Schema(
-     *              type="string"
-     *          )
-     *      ),
+     *      summary="Get Token Laravel",
+     *      description="Return Token",     
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -229,10 +219,8 @@ class AuthController extends Controller
      *     )
      */
 
-    public function callback(Request $request, string $driver) {
-        
-        $githubUser  = Socialite::driver($driver??'github')->user();
-
+    public function callback_github(Request $request) {
+        $githubUser  = Socialite::driver('github')->user();
         $user = User::updateOrCreate([
             'github_id' => $githubUser->id,
         ], [
@@ -242,27 +230,25 @@ class AuthController extends Controller
             'github_id' => $githubUser->id,
             'github_token' => $githubUser->token,
             'github_refresh_token' => $githubUser->refreshToken,
-        ]);   
+        ]);  
+        
+        Auth::login($user);
+        $tokenResult = $user->createToken(env('APP_NAME'));
+        $token = $tokenResult->token;
+        $token->expires_at = Carbon::now()->addDays(1);
+        $token->save();
 
-        //Auth::login($user);
-        //$tokenResult = $user->createToken(env('APP_NAME'));
-        //$token = $tokenResult->token;
-        //$token->expires_at = Carbon::now()->addDays(1);
-        //$token->save();
-
-        return response()->json([
-            'data'=>[
-                '$request'=>$request,
-                'user'=>$user,
-                '$githubUser'=>$githubUser,
-                '$getNickname'=>$githubUser->getNickname(),
-                'github_id' => $githubUser->id,
-                '$name'=>$githubUser->name??$githubUser->nickname,
-                'email' => $githubUser->email,
-                'password' => Hash::make('0000'),
-                'github_token' => $githubUser->token,
-                'github_refresh_token' => $githubUser->refreshToken,
-            ],
+        return response()->json(['data'=>[
+            'driver_user'=>$githubUser,
+            'user'=> $user,
+            'access_token' => $tokenResult->accessToken,
+            'token' => $token,
+            'token_type'   => 'Bearer',
+            'expires_at'   => Carbon::parse(
+                $tokenResult->token->expires_at
+            )->toDateTimeString(), 
+            ]
+            ,'message' => 'Usuario logueado con éxito!'
         ]);
     }
     

@@ -5,8 +5,8 @@
         "dev": "vite",
         "build": "vite build",
 
-        "start": "php artisan serve --port=8001 --host=0.0.0.0",
-        "localstart": "php artisan serve --port=8001 --host=127.0.0.1",
+        "start": "php artisan serve --port=8000 --host=0.0.0.0",
+        "localstart": "php artisan serve --port=8000 --host=127.0.0.1",
         "mr": "php artisan migrate:refresh --seed",
         "pk": "php artisan passport:keys --force",
         "l5": "php artisan l5-swagger:generate",

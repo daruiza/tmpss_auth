@@ -15,13 +15,6 @@ Route::group(['prefix' => 'auth', ], function () {
     });
 });
 
-
-
-Route::get('hello', function(){
-    return response()->json([
-        'message' => 'Hello'], 404);
-});
-
 Route::fallback(function(){
     return response()->json([
         'message' => 'Page Not Found.'], 404);

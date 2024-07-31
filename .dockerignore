@@ -1,0 +1,10 @@
+.git
+.gitattributes
+.gitignore
+
+composer.lock
+
+docker-compose.yml
+Dockerfile
+
+vendor

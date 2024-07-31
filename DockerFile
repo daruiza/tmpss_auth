@@ -5,10 +5,16 @@ WORKDIR /app
 
 # COPY app bootstrap config database public resources routes storage tests ./
 # COPY artisan .env composer.json package.json README.md vite.config.js phpunit.xml ./
-COPY . /app
+COPY . .
+
+ENV COMPOSER_ALLOW_SUPERUSER=1
 
 RUN composer install 
 RUN composer update
+
+# Esto se hace luego de montar en contenedor
+# RUN php artisan passport:client --password
+# RUN php artisan passport:client --personal
 
 # ENV DB_DATABASE=${DB_DATABASE}
 # ENV DB_USERNAME=${DB_USERNAME}

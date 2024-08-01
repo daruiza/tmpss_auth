@@ -18,6 +18,8 @@ Route::group(['prefix' => 'auth', ], function () {
 
 });
 
+//TODO: realaizar tambien el login via sanctum
+
 Route::fallback(function(){
     return response()->json([
         'message' => 'Page Not Found.'], 404);

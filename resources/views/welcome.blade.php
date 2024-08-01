@@ -60,8 +60,8 @@
                                 </div>
 
                                 <div class="pt-3 sm:pt-5">
+                                    <h2 class="text-xl font-semibold text-black dark:text-white">Passport</h2>
                                     <h2 class="text-xl font-semibold text-black dark:text-white">{{ env('APP_URL') }}/oauth/token</h2>
-
                                     <p>POST</p>
                                         <code>                                            
                                             'grant_type' => 'client_credentials',
@@ -88,8 +88,8 @@
                                 </div>
 
                                 <div class="pt-3 sm:pt-5">
+                                <h2 class="text-xl font-semibold text-black dark:text-white">Passport</h2>
                                     <h2 class="text-xl font-semibold text-black dark:text-white">{{ env('APP_URL') }}/oauth/token</h2>
-
                                     <p>POST</p>
                                         <code>                                            
                                             'grant_type' => 'password',
@@ -98,13 +98,13 @@
                                             'client_id' => '9c8f9c29-8c42-462e-a4f7-7724a176db4f​',
                                         </code><br>
                                         <code>                                            
-                                            'client_secret' => 'eWRRObiLhhabYKUBYzWLRqozVgyLixDcZSs9qzDW'
+                                            'client_secret' => 'eWRRObiLhhabYKUBYzWLRqozVgyLixDcZSs9qzDW',
                                         </code>
                                         <code>                                            
-                                            'username' => $request->email
+                                            'username' => $request->email,
                                         </code>
                                         <code>                                            
-                                            'password' => $request->password
+                                            'password' => $request->password,
                                         </code>
                                         <code>                                            
                                             'scope' => ''

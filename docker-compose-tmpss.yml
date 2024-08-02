@@ -16,7 +16,7 @@ services:
       
   bitnami:
     container_name: bitnami_tmss_auth
-    image: bitnami/laravel:11.1.4-debian-12-r0
+    image: tmpss_auth
     working_dir: /app
     volumes:
       #- /home/david/Software/tmpss_auth:/app

@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  mariadb:
+    container_name: mariadb_tmss_
+    image: bitnami/mariadb:11.4.2-debian-12-r0
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MARIADB_DATABASE=${DB_DATABASE}
+      - MARIADB_ROOT_USER=${DB_USERNAME}
+      - MARIADB_ROOT_PASSWORD=${DB_PASSWORD}
+    ports:
+      - 3301:3306
+    volumes:
+      - tmpss_volume_:/bitnami/mariadb
+      
+  bitnami:
+    container_name: bitnami_tmss_auth
+    image: bitnami/laravel:11.1.4-debian-12-r0
+    working_dir: /app
+    volumes:
+      #- /home/david/Software/tmpss_auth:/app
+      - ./.env:/app/.env
+    ports:      
+      - 8001:8000
+    environment:
+      - DB_HOST=mariadb
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}     
+    command: >
+      sh -c "npm run start"  
+    depends_on:
+      - mariadb    
+
+  phpmyadmin:
+    image: bitnami/phpmyadmin:5.2.1-debian-12-r33
+    ports:
+      - '8081:8080'
+      - '443:8443'
+    depends_on:
+      - mariadb
+      
+volumes:
+  tmpss_volume_:
+    external: true
+

@@ -2,10 +2,11 @@ FROM bitnami/laravel:11.1.4-debian-12-r0
 
 WORKDIR /app
 COPY . .
+EXPOSE 8000
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN composer install 
-RUN composer update
+# RUN composer update
 
 # TODO
 # Esto se hace luego de montar en contenedor en el docker-compose
@@ -17,4 +18,5 @@ RUN composer update
 
 
 CMD php artisan serve --host=0.0.0.0 --port=8000
-EXPOSE 8000
+# CMD ["php" "artisan" "serve" "--host=0.0.0.0" "--port=8000"]
+# CMD ["php" "--version"]
